@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<global-method-security secured-annotations="enabled"  pre-post-annotations="enabled">
+	 <expression-handler ref="expressionHandler"/>
+	</global-method-security>
+
+	<http pattern="/resources/**" security="none" />
+
+	<http auto-config="false" entry-point-ref="loginUrlAuthenticationEntryPoint" use-expressions="true">
+	  <intercept-url pattern="/panel/webItems/all*" access="hasAnyRole('ROLE_MODERATOR')"/>
+		<intercept-url pattern="/panel/webItems/**" access="hasAnyRole('ROLE_EDITOR','ROLE_MODERATOR')"/>
+		<intercept-url pattern="/**" access="permitAll" />
+		<custom-filter position="FORM_LOGIN_FILTER" ref="customUsernamePasswordAuthenticationFilter" />
+		<remember-me services-ref="rememberMeServices" />
+		<logout invalidate-session="true" logout-success-url="/" logout-url="/user/logout" />
+	</http>
+
+	<beans:bean id="entrypoint403" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+
+	<beans:bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/user/login" />
+	</beans:bean>
+
+	<beans:bean id="customUsernamePasswordAuthenticationFilter" class="portal.security.filters.CustomUsernamePasswordAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="filterProcessesUrl" value="/processLogin" />
+		<beans:property name="usernameParameter" value="username" />
+		<beans:property name="passwordParameter" value="password" />
+		<beans:property name="authenticationSuccessHandler" ref="customAuthenticationSuccessHandler" />
+		<beans:property name="authenticationFailureHandler" ref="customAuthenticationFailureHandler" />
+	</beans:bean>
+
+	<beans:bean id="customAuthenticationSuccessHandler" class="portal.security.filters.CustomAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/"></beans:property>
+		<beans:property name="alwaysUseDefaultTargetUrl" value="true"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="customAuthenticationFailureHandler" class="portal.security.filters.CustomAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/user/login/?error=1/"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+		<beans:property name="key" value="d?[|.2S~)gCUd?[|.2S~)gCUstua@$\)O@29{q=SLe=fSf(0"/>
+		<beans:property name="tokenValiditySeconds" value="15552000" /> <!-- 180 days -->
+		<beans:property name="userDetailsService" ref="userDetailsService" />
+		<beans:property name="parameter" value="rememberMe" />
+	</beans:bean>
+
+	<beans:bean id="bCryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService" />
+		<beans:property name="passwordEncoder" ref="bCryptEncoder" />
+	</beans:bean>
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="daoAuthenticationProvider"/>
+	</authentication-manager>
+
+  <beans:bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+    <beans:property name="permissionEvaluator" ref="webItemPermissionEvaluator"/>
+  </beans:bean>
+
+</beans:beans>

@@ -1,0 +1,351 @@
+.form {
+	margin-top: 20px;
+	margin-left: 200px;
+	width: 510px;
+	font-family: titillium;	
+	color: white;
+}
+
+h1 {
+	margin-left: 205px;
+	margin-top: 20px;
+	color: white;
+	font-family: playregular;
+}
+
+.formLabel {
+	min-width: 160px;
+	padding-left: 14px;
+	display: inline-block;
+	font-size: 20px;
+	margin-bottom: 5px;
+	margin-top: 24px;	
+}
+
+.resetPassLabel {
+	font-size: 15px;
+}
+
+.textBox {
+	width: 300px;
+	height: 30px;
+	border-radius: 5px;
+	font-size: 22px;
+	padding-left: 5px;
+	font-family: titillium;
+	font-weight: bold;
+}
+
+.resetPasswordTextbox {
+	width: 290px;
+}
+
+.textBox:focus {
+	border: 2px solid #90D000;
+}
+
+.error {
+	padding-left: 180px;
+	height: 20px;
+	color: #820f0c;
+	width: 300px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.loginError{
+	padding: 15px 0px 15px 0px;
+	margin-left: 10px;	
+	width: 500px;
+}
+
+.resetPassError {
+	padding-left: 195px;
+}
+
+.errorNewPassword{
+	padding-bottom: 5px;
+}
+
+.buttonDiv {
+	text-align: center;
+}
+
+.button {
+	font-family: titillium;
+	font-weight: 600;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+	border-radius: 2px;
+	cursor: pointer;
+	border-width: 0px;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 2px;
+	margin: 8px;
+	background: rgba(0,0,0, 0.6);
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+	background: -o-linear-gradient(top, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.1) 100%);
+	width: 100px;
+	border-top: 1px solid #50B6D4;
+	border-left: 1px solid #50B6D4;
+}
+
+.loginButton {
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+.submitButton {
+	margin: 30px;
+}
+
+.resetPasswordButton {
+	margin: 30px;
+	width: 200px;
+}
+
+.button:active {
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+	 -webkit-transition: 200ms linear 0s;  
+    -moz-transition: 200ms linear 0s;  
+    -o-transition: 200ms linear 0s;  
+    transition: 200ms linear 0s; 
+}
+
+.button:hover {
+	text-shadow: -1px 1px 8px #fff, 1px -1px 8px #fff; 
+	 -webkit-transition: 250ms linear 0s;  
+    -moz-transition: 250ms linear 0s;  
+    -o-transition: 250ms linear 0s;  
+    transition: 250ms linear 0s;  
+}
+
+.rememberMe {
+	padding-left: 170px;
+	margin: 10px;
+}
+
+.buttonDiv a {
+	text-decoration: none;
+}
+
+.infoMessage{
+	margin-left: 100px;
+	margin-top: 50px;
+	font-size: 18px;
+	color: white;
+	width: 500px;
+	padding: 10px;
+	font-family: titillium;
+	font-weight: 600;
+}
+
+#result{
+    margin-left:180px;
+    height: 0px;
+}
+
+.insertWebItemForm {
+	margin-top: 10px;
+	width: 100%;
+	font-family: titillium;	
+	color: white;
+}
+
+.titleLeft {
+	margin-left: 10px;
+	font-size: 24px;
+}
+
+.wideTextBox {
+	width: 700px;
+	font-size: 16px;
+}
+
+.narrowTextBox {
+	width: 150px;
+	font-size: 16px;
+}
+
+.textFieldLabel {
+	height: 50px;
+	float: left;
+}
+
+.textField {
+	width: 730px;
+	height: 100px;
+}
+
+.imageToSelect {
+	height: 50px;
+	width: 50px;
+}
+
+fieldset span {
+	padding-right: 8px;
+}
+
+fieldset {
+	padding: 5px;
+}
+
+.radioButton {
+	margin-left: 10px;
+}
+
+.submitWebItemButton {
+	width: 150px;
+	margin-left: 380px;
+	margin-bottom: 20px;
+}
+
+/* Display tag */
+
+table.displayTable{
+	
+	width: 100%;
+	margin: 20px 0 20px 0 !important;
+}
+
+th,td {
+	padding: 2px 4px 2px 4px !important;
+	text-align: left;
+	vertical-align: top;
+}
+
+thead tr {
+	background-color: #000;
+	color:#fff;
+}
+
+th.sorted {
+	background-color: orange;
+}
+
+th a,th a:visited {
+	color: black;
+}
+
+th a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+th.sorted a,th.sortable a {
+	background-position: right;
+	display: block;
+	width: 100%;
+}
+
+th.sortable a {
+	background-image: url(../img/arrow_off.png);
+}
+
+th.order1 a {
+	background-image: url(../img/arrow_down.png);
+}
+
+th.order2 a {
+	background-image: url(../img/arrow_up.png);
+}
+
+tr.odd {
+	background-color: #fff
+}
+
+tr.tableRowEven,tr.even {
+	background-color: #fea
+}
+
+div.exportlinks {
+	background-color: #eee;
+	border: 1px dotted #999;
+	padding: 2px 4px 2px 4px;
+	margin: 2px 0 10px 0;
+	width: 79%;
+}
+
+span.export {
+	padding: 0 4px 1px 20px;
+	display: inline;
+	display: inline-block;
+	cursor: pointer;
+}
+
+span.excel {
+	background-image: url(../img/ico_file_excel.png);
+}
+
+span.csv {
+	background-image: url(../img/ico_file_csv.png);
+}
+
+span.xml {
+	background-image: url(../img/ico_file_xml.png);
+}
+
+span.pdf {
+	background-image: url(../img/ico_file_pdf.png);
+}
+
+span.rtf {
+	background-image: url(../img/ico_file_rtf.png);
+}
+
+span.pagebanner {
+	background-color: #000;
+	color:#fff;
+	
+	width: 100%;
+	margin-top: 10px;
+	display: block;
+	border-bottom: none;
+	margin-left:0px;
+}
+
+span.pagelinks  {
+	background-color: #000;
+	color:#fff;
+	width: 100%;
+	display: block;
+	border-top: none;
+	margin-bottom: -5px;
+	margin-left:0px;
+}
+
+span.pagelinks a, span.pagelinks a:visited {
+	color:#fff;
+}
+.group-1 {
+    font-weight:bold;
+    padding-bottom:10px;
+    border-top:1px solid black;
+}
+.group-2 {
+    font-style:italic;
+    border-top: 1px solid black;
+
+}
+.subtotal-sum, .grandtotal-sum {
+    font-weight:bold;
+    text-align:right;
+}
+.subtotal-header {
+    padding-bottom: 0px;
+    border-top: 1px solid white;
+}
+.subtotal-label, .grandtotal-label {
+    border-top: 1px solid white;
+    font-weight: bold;
+}
+.grouped-table tr.even {
+    background-color: #fff;
+}
+.grouped-table tr.odd {
+    background-color: #fff;
+}
+.grandtotal-row {
+    border-top: 2px solid black;
+}

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo PUBLIC "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN" "
+http://java.sun.com/dtd/jdo_3_0.dtd">
+<jdo>
+	<package name="portal.domain.impl">
+
+		<class name="DataEntity" identity-type="application" detachable="true"
+			table="_data_entity">
+			<inheritance strategy="new-table" />
+			<field name="id" primary-key="true" column="id" value-strategy="identity" />
+		</class>
+
+		<class name="Authority" identity-type="application" table="authority"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="authority">
+				<column name="authority" length="50" jdbc-type="VARCHAR" />
+			</field>
+		</class>
+
+		<class name="DataRequestLog" identity-type="application" table="data_request_log"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="searchText">
+				<column name="search_text" length="50" jdbc-type="VARCHAR" />
+			</field>
+			<field name="ipAddress">
+				<column name="ip_address" length="50" jdbc-type="VARCHAR" />
+			</field>
+			<field name="requestedTags" default-fetch-group="true"
+				table="data_request_log_tags">
+				<collection element-type="portal.domain.impl.Tag" />
+				<join />
+				<order>
+					<extension vendor-name="datanucleus" key="list-ordering"
+						value="position ASC" />
+				</order>
+			</field>
+			<field name="requestedWebItemTypes" default-fetch-group="true"
+				table="data_request_log_web_item_types">
+				<collection element-type="portal.domain.impl.WebItemType" />
+				<join />
+				<order>
+					<extension vendor-name="datanucleus" key="list-ordering"
+						value="position ASC" />
+				</order>
+			</field>
+			<field name="createDate">
+				<column name="create_date" jdbc-type="DATETIME" allows-null="false" />
+			</field>
+			<field name="createdBy">
+				<column name="created_by" allows-null="false" />
+			</field>
+		</class>
+
+		<class name="FeedbackOption" identity-type="application" table="feedback_option"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="name">
+				<column name="name" length="30" jdbc-type="VARCHAR"
+					allows-null="false" />
+			</field>
+			<field name="position">
+				<column name="position" jdbc-type="int" allows-null="false" />
+			</field>
+			<field name="value">
+				<column name="value" length="3" jdbc-type="INT" allows-null="false" />
+			</field>
+			<field name="iconPath">
+				<column name="icon_path" length="200" jdbc-type="VARCHAR" />
+			</field>
+		</class>
+
+		<class name="FeedbackType" identity-type="application" table="feedback_type"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="name">
+				<column name="name" length="30" jdbc-type="VARCHAR"
+					allows-null="false" />
+			</field>
+			<field name="description">
+				<column name="description" length="100" jdbc-type="VARCHAR" />
+			</field>
+			<field name="feedbackOptions" default-fetch-group="true">
+				<collection element-type="portal.domain.impl.FeedbackOption" />
+				<element column="feedback_type_id" />
+				<order/>
+			</field>
+		</class>
+
+		<class name="Log" identity-type="application" table="log"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="text">
+				<column name="text" length="1000" jdbc-type="VARCHAR"
+					allows-null="false" />
+			</field>
+			<field name="additionalInfo">
+				<column name="additional_info" length="1000" jdbc-type="VARCHAR" />
+			</field>
+			<field name="operation">
+				<column name="operation" length="50" jdbc-type="VARCHAR" />
+			</field>
+			<field name="ipAddress">
+				<column name="ip_address" length="50" jdbc-type="VARCHAR" />
+			</field>
+			<field name="severity">
+				<column name="severity" length="2" jdbc-type="INT" />
+			</field>
+			<field name="createDate">
+				<column name="create_date" jdbc-type="DATETIME" allows-null="false" />
+			</field>
+			<field name="createdBy">
+				<column name="created_by" allows-null="false" />
+			</field>
+		</class>
+
+		<class name="Tag" identity-type="application" table="tag"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="name">
+				<column name="name" length="30" jdbc-type="VARCHAR"
+					allows-null="false" />
+			</field>
+			<field name="description">
+				<column name="description" length="100" jdbc-type="VARCHAR" />
+			</field>
+			<field name="iconPath">
+				<column name="icon_path" length="200" jdbc-type="VARCHAR" />
+			</field>
+			<field name="isPrimary">
+				<column name="is_primary" jdbc-type="bit" allows-null="false" />
+			</field>
+			<field name="parentTag" default-fetch-group="true">
+				<column name="parent_tag_id" />
+			</field>
+			<field name="position">
+				<column name="position" jdbc-type="int" allows-null="false" />
+			</field>
+			<field name="createDate">
+				<column name="create_date" jdbc-type="DATETIME" allows-null="false" />
+			</field>
+			<field name="createdBy">
+				<column name="created_by" allows-null="false" />
+			</field>
+			<field name="updateDate">
+				<column name="update_date" jdbc-type="DATETIME" />
+			</field>
+			<field name="updatedBy">
+				<column name="updated_by" />
+			</field>
+			<field name="deleted">
+				<column name="deleted" jdbc-type="bit" allows-null="false"
+					default-value="0" />
+			</field>
+			<fetch-group name="Data_Requests_For_Tags_Fetch_Group">
+				<field name="dataRequestLogs" recursion-depth="3" />
+			</fetch-group>
+		</class>
+
+		<class name="User" identity-type="application" table="user"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="username" indexed="unique">
+				<column name="user_name" length="50" jdbc-type="TEXT"
+					allows-null="false" />
+			</field>
+			<field name="password">
+				<column name="password" length="100" jdbc-type="VARCHAR"
+					allows-null="false"/>
+			</field>
+			<field name="retypePassword" persistence-modifier="none" />
+			<field name="activationCode">
+				<column name="activation_code" length="45" jdbc-type="VARCHAR" />
+			</field>
+			<field name="passwordChangeCode">
+				<column name="password_change_code" length="45" jdbc-type="VARCHAR" />
+			</field>
+			<field name="passwordChangeCodeCreatedAt">
+				<column name="password_change_code_created_at" jdbc-type="DATETIME" />
+			</field>
+			<field name="accountNonExpired">
+				<column name="account_non_expired" jdbc-type="bit"
+					allows-null="false" default-value="1" />
+			</field>
+			<field name="accountNonLocked">
+				<column name="account_non_locked" jdbc-type="bit"
+					allows-null="false" default-value="1" />
+			</field>
+			<field name="credentialsNonExpired">
+				<column name="credentials_non_expired" jdbc-type="bit"
+					allows-null="false" default-value="1" />
+			</field>
+			<field name="enabled">
+				<column name="enabled" jdbc-type="bit" allows-null="false"
+					default-value="0" />
+			</field>
+			<field name="numberOfFailedAttempts">
+				<column name="number_of_failed_attempts" jdbc-type="int"
+					allows-null="false" default-value="0" />
+			</field>
+			<field name="numberOfAccountLocks">
+				<column name="number_of_account_locks" jdbc-type="int"
+					allows-null="false" default-value="0" />
+			</field>
+			<field name="totalNumberOfFailedAttempts">
+				<column name="TOTAL_NUMBER_OF_FAILED_ATTEMPTS" jdbc-type="int"
+					allows-null="false" default-value="0" />
+			</field>
+			<field name="lastFailedAttemptTime">
+				<column name="last_failed_attempt_time" jdbc-type="DATETIME" />
+			</field>
+			<field name="authorities" default-fetch-group="true"  cacheable="false">
+				<collection element-type="portal.domain.impl.Authority"  />
+				<join />
+			</field>
+			<field name="eMailAddress" indexed="unique">
+				<column name="e_mail_address" length="100" jdbc-type="VARCHAR" />
+			</field>
+			<field name="createDate">
+				<column name="create_date" jdbc-type="DATETIME" allows-null="false" />
+			</field>
+			<field name="createdBy">
+				<column name="created_by" allows-null="false" />
+			</field>
+			<field name="updateDate">
+				<column name="update_date" jdbc-type="DATETIME" />
+			</field>
+			<field name="updatedBy">
+				<column name="updated_by" />
+			</field>
+			<field name="deleted">
+				<column name="deleted" jdbc-type="bit" allows-null="false"
+					default-value="0" />
+			</field>
+		</class>
+
+		<class name="Vote" table="vote" detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="webItem">
+				<column name="web_item_id" allows-null="false" />
+			</field>
+			<field name="feedbackOption">
+				<column name="feedback_option_id" allows-null="false" />
+			</field>
+			<field name="ipAddress">
+				<column name="ip_address" length="50" jdbc-type="VARCHAR" />
+			</field>
+			<field name="createDate">
+				<column name="create_date" jdbc-type="DATETIME" allows-null="false" />
+			</field>
+			<field name="createdBy">
+				<column name="created_by" allows-null="false" />
+			</field>
+		</class>
+
+		<class name="VoteStat" table="vote_stat" detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="webItem">
+				<column name="web_item_id" allows-null="false" />
+			</field>
+			<field name="feedbackOption" default-fetch-group="true">
+				<column name="feedback_option_id" allows-null="false" />
+			</field>
+			<field name="voteCount">
+				<column name="vote_count" length="7" jdbc-type="INT"
+					allows-null="false" default-value="0" />
+			</field>
+		</class>
+
+		<class name="WebItem" identity-type="application" table="web_item"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="text">
+				<column name="text" length="1000" jdbc-type="VARCHAR"
+					allows-null="false" />
+			</field>
+			<field name="webItemDate">
+				<column name="web_item_date" jdbc-type="DATETIME" />
+			</field>
+			<field name="sourceURL" indexed="unique">
+				<column name="source_URL" length="700" jdbc-type="VARCHAR"
+						allows-null="false" />
+			</field>
+			<field name="sourceName" null-value="exception">
+				<column name="source_name" length="100" jdbc-type="VARCHAR"
+					allows-null="false" />
+			</field>
+			<field name="featured">
+				<column name="featured" jdbc-type="bit" allows-null="false"
+					default-value="0" />
+			</field>
+			<field name="webItemType" default-fetch-group="true">
+				<column name="web_item_type_id" allows-null="false" />
+			</field>
+			<field name="tags" default-fetch-group="true" table="web_item_tags">
+				<collection element-type="portal.domain.impl.Tag" />
+				<join />
+				<order/>
+			</field>
+			<field name="embedCode">
+				<column name="embed_Code" length="1000" jdbc-type="VARCHAR" />
+			</field>
+			<field name="image" default-fetch-group="true">
+				<column name="image" allows-null="true" />
+			</field>
+			<field name="createDate">
+				<column name="create_date" jdbc-type="DATETIME" allows-null="false" />
+			</field>
+			<field name="createdBy" default-fetch-group="true">
+				<column name="created_by" allows-null="false" />
+			</field>
+			<field name="updateDate">
+				<column name="update_date" jdbc-type="DATETIME" />
+			</field>
+			<field name="updatedBy">
+				<column name="updated_by" />
+			</field>
+			<field name="deleted">
+				<column name="deleted" jdbc-type="bit" allows-null="false"
+					default-value="0" />
+			</field>
+		</class>
+
+		<class name="WebItemType" identity-type="application" table="web_item_type"
+			detachable="true">
+			<inheritance strategy="new-table" />
+			<field name="name">
+				<column name="name" length="30" jdbc-type="VARCHAR"
+					allows-null="false" />
+			</field>
+			<field name="description">
+				<column name="description" length="100" jdbc-type="VARCHAR" />
+			</field>
+			<field name="feedbackType" default-fetch-group="true">
+				<column name="feedback_type_id" allows-null="false" />
+			</field>
+			<field name="position">
+				<column name="position" jdbc-type="int" allows-null="false" />
+			</field>
+		</class>
+
+		<class name="WebItemImage" identity-type="application" table="web_item_image"
+			detachable="true">
+			<inheritance strategy="new-rable" />
+			<field name="image" persistence-modifier="persistent">
+				<column name="image" jdbc-type="BLOB" allows-null="true" />
+			</field>
+			<field name="mimeType">
+				<column name="mimeType" length="100" jdbc-type="VARCHAR" />
+			</field>
+			<field name="webItem" default-fetch-group="false" mapped-by="image" />
+			<field name="sourceURL" default-fetch-group="true">
+				<column name="sourceURL" length="1000" jdbc-type="VARCHAR" />
+			</field>
+			<field name="createDate">
+				<column name="create_date" jdbc-type="DATETIME" allows-null="false" />
+			</field>
+			<field name="createdBy" default-fetch-group="true">
+				<column name="created_by" allows-null="false" />
+			</field>
+
+			<fetch-group name="imageFetchGroup">
+				<field name="image" />
+			</fetch-group>
+
+		</class>
+	</package>
+</jdo>
